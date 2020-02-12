@@ -1,4 +1,6 @@
 import * as THREE from 'three'
+import {OrbitControls} from 'three-controls'
+
 import AbstractEntity from '@/engine/AbstractEntity'
 import PostFX from '@/engine/PostFX'
 
@@ -15,6 +17,7 @@ export default class World {
       far: 10000,
     };
     this.scene = null;
+    this.controls = null
     this.clock = new THREE.Clock();
     this.init();
     this.render();
@@ -29,7 +32,7 @@ export default class World {
     this.camera.position.z = 5;
 
     this.scene = new THREE.Scene();
-
+    this.controls = new OrbitControls(this.camera, this.canvas)
     this.FX = new PostFX(this.scene, this.camera, this.renderer);
 
     this.setupLights();
@@ -57,6 +60,7 @@ export default class World {
 
     this.entity.update(time)
 
+    this.controls.update()
     this.FX.composer.render(this.clock.getDelta());
     this.FX.update(time, {width: window.innerWidth, height: window.innerHeight});
     requestAnimationFrame(this.render)
