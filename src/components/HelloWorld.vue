@@ -1,14 +1,23 @@
 <template>
   <div class="HelloWorld">
-    <h1>HelloWorld</h1>
+    <canvas ref="canvas"></canvas>
   </div>
 </template>
 <script>
+import World from '@/engine/World'
 export default {
   name: 'HelloWorld',
   props: {
     msg: String,
   },
+  mounted () {
+    console.log('on HelloWorld');
+    this.$nextTick(() => {
+      const w = new World({
+        canvas: this.$refs.canvas
+      })
+    });
+  }
 };
 </script>
 
